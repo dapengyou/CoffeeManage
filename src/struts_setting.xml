@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="root" namespace="/" extends="json-default,tiles-default">
+		<!-- 拦截器 -->
+		<interceptors>
+			<interceptor name="homepageaccess"
+				class="com.decks.coffeemanage.interceptor.HomePageAccessInterceptor"></interceptor>
+			<interceptor name="ipcheck"
+				class="com.decks.coffeemanage.interceptor.IPCheckInterceptor"></interceptor>
+			<interceptor-stack name="interceptorstack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="homepageaccess"></interceptor-ref>
+				<interceptor-ref name="ipcheck"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="interceptorstack"></default-interceptor-ref>
+
+		<global-results>
+			<result name="sql">/error/sqlexception.jsp</result>
+			<result name="driver">/error/driverexception.jsp</result>
+			<result name="nullPointer">/error/nullpointer.jsp</result>
+			<result name="success" type="tiles">.main</result>
+			<result name="tologin">/index/login.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="sql" exception="java.sql.SQLException"></exception-mapping>
+			<exception-mapping result="driver" exception="java.lang.Exception"></exception-mapping> 
+			<exception-mapping result="nullPointer" exception="java.lang.NullPointerException"></exception-mapping> 
+		</global-exception-mappings>  
+	</package>
+
+	<package name="index" namespace="/index" extends="root">
+		<action name="login" class="loginAction" method="login">
+			<result name="input">/index/login.jsp</result>
+			<result name="fail">/error/loginerror.jsp</result>
+		</action>
+		<action name="toregister" class="homeMainAction" method="toregister">
+			<result name="toregister" type="tiles">.register</result>
+		</action>
+		<action name="register" class="registerAction" method="register">
+			<result name="input" type="tiles">.register</result> 
+		</action>
+		<action name="logout" class="homeMainAction" method="logout">
+			<result name="logout">/index/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="bean" namespace="/manageBean" extends="root">
+		<action name="tomain" class="beanMainAction" method="tomain">
+			<result name="tomain" type="tiles">.bean_main</result>
+		</action>
+		<action name="toadd" class="beanMainAction" method="toadd">
+			<result name="toadd" type="tiles">.bean_add</result>
+		</action>
+		<action name="todelete" class="beanMainAction" method="todelete">
+			<result name="todelete" type="tiles">.bean_delete</result>
+		</action>
+		<action name="toupdate" class="beanMainAction" method="toupdate">
+			<result name="toupdate" type="tiles">.bean_update</result>
+		</action> 
+		
+		<action name="add" class="beanProcessAction" method="add">
+			<result name="main" type="redirect">/manageBean/tomain.action</result>
+			<result name="input" type="tiles">.bean_add</result>
+		</action> 
+		<action name="delete" class="beanProcessAction" method="delete">
+			<result name="main" type="redirect">/manageBean/tomain.action</result>
+			<result name="input" type="tiles">.bean_delete</result>
+		</action>
+		<action name="update" class="beanProcessAction" method="update">
+			<result name="main" type="redirect">/manageBean/tomain.action</result>
+			<result name="input" type="tiles">.bean_update</result>
+		</action>
+	</package> 
+
+	<package name="handle" namespace="/manageHandle" extends="root">
+		<action name="tomain" class="handleMainAction" method="tomain">
+			<result name="tomain" type="tiles">.handle_main</result>
+		</action>
+		<action name="toadd" class="handleMainAction" method="toadd">
+			<result name="toadd" type="tiles">.handle_add</result>
+		</action>
+		<action name="todelete" class="handleMainAction" method="todelete">
+			<result name="todelete" type="tiles">.handle_delete</result>
+		</action>
+		<action name="toupdate" class="handleMainAction" method="toupdate">
+			<result name="toupdate" type="tiles">.handle_update</result>
+		</action>
+		
+		<action name="add" class="handleProcessAction" method="add">
+			<result name="main" type="redirect">/manageHandle/tomain.action</result>
+		</action>
+		<action name="delete" class="handleProcessAction" method="delete">
+			<result name="main" type="redirect">/manageHandle/tomain.action</result>
+		</action>
+		<action name="update" class="handleProcessAction" method="update">
+			<result name="main" type="redirect">/manageHandle/tomain.action</result>
+		</action>
+	</package>
+	
+	<package name="order" namespace="/manageOrder" extends="root">
+		<action name="tomain" class="orderMainAction" method="tomain">
+			<result name="tomain" type="tiles">.order_main</result>
+		</action>
+		<action name="toadd" class="orderMainAction" method="toadd">
+			<result name="toadd" type="tiles">.order_add</result>
+		</action>
+		<action name="todelete" class="orderMainAction" method="todelete">
+			<result name="todelete" type="tiles">.order_delete</result>
+		</action>
+		<action name="toupdate" class="orderMainAction" method="toupdate">
+			<result name="toupdate" type="tiles">.order_update</result>
+		</action>
+		
+		<action name="add" class="orderProcessAction" method="add">
+			<result name="main" type="redirect">/manageOrder/tomain.action</result>
+		</action>
+		<action name="update" class="orderProcessAction" method="update">
+			<result name="main" type="redirect">/manageOrder/tomain.action</result>
+		</action>
+		<action name="delete" class="orderProcessAction" method="delete">
+			<result name="main" type="redirect">/manageOrder/tomain.action</result>
+		</action>
+	</package>
+	
+	<package name="variety" namespace="/manageVariety" extends="root">
+		<action name="showphoto" class="varietyPhotoShowAction" method="show">
+			<result name="show" type="stream">
+				<param name="contentType">${contentType}</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">inline;filename="${fileName}"</param>
+			</result>
+		</action>
+		<action name="tomain" class="varietyMainAction" method="tomain">
+			<result name="tomain" type="tiles">.variety_main</result>
+		</action>
+		<action name="toadd" class="varietyMainAction" method="toadd">
+			<result name="toadd" type="tiles">.variety_add</result>
+		</action>
+		<action name="todelete" class="varietyMainAction" method="todelete">
+			<result name="todelete" type="tiles">.variety_delete</result>
+		</action>
+		<action name="toupdate" class="varietyMainAction" method="toupdate">
+			<result name="toupdate" type="tiles">.variety_update</result>
+		</action>
+		
+		<action name="add" class="varietyProcessAction" method="add">
+			<result name="main" type="redirect">/manageVariety/tomain.action</result>
+		</action>
+		<action name="update" class="varietyProcessAction" method="update">
+			<result name="main" type="redirect">/manageVariety/tomain.action</result>
+		</action>
+		<action name="delete" class="varietyProcessAction" method="delete">
+			<result name="main" type="redirect">/manageVariety/tomain.action</result>
+		</action>
+	</package>
+</struts>

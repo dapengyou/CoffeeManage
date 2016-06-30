@@ -1,0 +1,44 @@
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+    <field name="bv.beanname">
+        <field-validator type="requiredstring">
+            <message>食材名不能为空</message>
+        </field-validator>
+        <field-validator type="regex">
+    		<param name="regexExpression"><![CDATA[^[\u4e00-\u9fa5]{0,}$]]></param>
+    		<message>只能输入汉字</message>
+        </field-validator>
+    </field>
+   
+    <field name="bv.greenprice">
+    	<field-validator type="required">
+    		<message>食材单价不能为空</message>
+    	</field-validator>
+    	<field-validator type="double">
+    		<param name="minInclusive">0.0</param>
+    		<param name="maxInclusive">10.0</param>
+    		<message>单价在${minInclusive} - ${maxInclusive}之间</message>
+    	</field-validator>
+    </field>
+    
+     <field name="bv.cookedprice">
+    	<field-validator type="required">
+    		<message>食材单价不能为空</message>
+    	</field-validator>
+    	<field-validator type="double">
+    		<param name="minInclusive">0.0</param>
+    		<param name="maxInclusive">10.0</param>
+    		<message>单价在${minInclusive} - ${maxInclusive}之间</message>
+    	</field-validator>
+    </field>
+    
+     <field name="bv.productiondate">
+        <field-validator type="required">
+            <message>日期不能为空</message>
+        </field-validator>
+    </field>
+    
+</validators>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/jdbc
+http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util.xsd
+http://www.springframework.org/schema/jee      
+http://www.springframework.org/schema/jee/spring-jee.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<!-- 设置Spring扫描的注释Bean的路径 -->
+	<context:component-scan base-package="com.decks.coffeemanage"></context:component-scan>
+
+
+	<!-- 直接使用Tomcat配置的数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean" 
+		> <property name="jndiName"> <value>java:comp/env/mySQL</value> </property> 
+		</bean> -->
+	<!-- 使用C3P0框架配置数据源 -->
+	<bean id="dataSource01" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/coffee?useUnicode=true&amp;characterEncoding=utf-8"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value=""></property>
+		<property name="acquireIncrement" value="2"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="5"></property>
+		<property name="minPoolSize" value="1"></property>
+		<property name="acquireRetryDelay" value="100"></property>
+		<property name="acquireRetryAttempts" value="10"></property>
+		<property name="breakAfterAcquireFailure" value="false"></property>
+	</bean>
+
+	<!-- 配置Spring管理的Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource01" />
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:/com/decks/coffeemanage/value</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQLDialect
+				hibernate.show_sql=true
+			</value>
+		</property>
+	</bean>
+
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+	<!-- 配置Hibernate的事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 事务注释声明 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

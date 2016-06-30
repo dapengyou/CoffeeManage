@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.decks.coffeemanage.value">
+
+    <class name="BeanValue" table="bean" lazy="true">
+        <id name="beanid" column="beanid">
+        	<generator class="increment"></generator>
+        </id>
+        <property name="beanname"/>
+        <property name="producthome"/>
+        <property name="productiondate"/>
+        <property name="greenprice"/>
+        <property name="cookedprice"/>
+        
+      	<set name="orders" table="order_form" cascade="delete">
+        	<key column="beanid"></key>
+        	<one-to-many class="OrderValue"></one-to-many>
+        </set>
+        
+        <set name="handles" table="bean_handle" inverse="false" lazy="false">
+        	<key column="bid"></key>
+        	<many-to-many class="HandleValue" column="hid"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

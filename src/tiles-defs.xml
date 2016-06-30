@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name=".base" template="/layout/layout.jsp">
+		<put-attribute name="top" value="/include/top.jsp" />
+		<put-attribute name="left" value="/include/left.jsp" />
+		<put-attribute name="footer" value="/include/footer.jsp" />
+	</definition>
+
+	<definition name=".main" extends=".base">
+		<put-attribute name="body" value="/index/main.jsp" />
+	</definition>
+	<definition name=".register" extends=".base">
+		<put-attribute name="body" value="/index/register.jsp" />
+	</definition>
+
+	<definition name=".bean_main" extends=".base">
+		<put-attribute name="body" value="/manageBean/main.jsp" />
+	</definition>
+	<definition name=".bean_add" extends=".base">
+		<put-attribute name="body" value="/manageBean/add.jsp" />
+	</definition>
+	<definition name=".bean_update" extends=".base">
+		<put-attribute name="body" value="/manageBean/update.jsp" />
+	</definition>
+	<definition name=".bean_delete" extends=".base">
+		<put-attribute name="body" value="/manageBean/delete.jsp" />
+	</definition>
+	
+	<definition name=".handle_main" extends=".base">
+		<put-attribute name="body" value="/manageHandle/main.jsp" />
+	</definition>
+	<definition name=".handle_add" extends=".base">
+		<put-attribute name="body" value="/manageHandle/add.jsp" />
+	</definition>
+	<definition name=".handle_update" extends=".base">
+		<put-attribute name="body" value="/manageHandle/update.jsp" />
+	</definition>
+	<definition name=".handle_delete" extends=".base">
+		<put-attribute name="body" value="/manageHandle/delete.jsp" />
+	</definition>
+	
+	<definition name=".order_main" extends=".base">
+		<put-attribute name="body" value="/manageOrder/main.jsp" />
+	</definition>
+	<definition name=".order_add" extends=".base">
+		<put-attribute name="body" value="/manageOrder/add.jsp" />
+	</definition>
+	<definition name=".order_update" extends=".base">
+		<put-attribute name="body" value="/manageOrder/update.jsp" />
+	</definition>
+	<definition name=".order_delete" extends=".base">
+		<put-attribute name="body" value="/manageOrder/delete.jsp" />
+	</definition>
+	
+	<definition name=".variety_main" extends=".base">
+		<put-attribute name="body" value="/manageVariety/main.jsp" />
+	</definition>
+	<definition name=".variety_add" extends=".base">
+		<put-attribute name="body" value="/manageVariety/add.jsp" />
+	</definition>
+	<definition name=".variety_update" extends=".base">
+		<put-attribute name="body" value="/manageVariety/update.jsp" />
+	</definition>
+	<definition name=".variety_delete" extends=".base">
+		<put-attribute name="body" value="/manageVariety/delete.jsp" />
+	</definition>
+	
+	
+	
+</tiles-definitions>
